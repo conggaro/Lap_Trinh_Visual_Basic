@@ -95,7 +95,7 @@ Module Program
         ' từ 2 danh sách "listProduct" và "listBrand"
         ' để cung cấp nhiều thông tin cho "người dùng"
         Dim dataSource = From item1 In listProduct
-                         From item2 In listBrand.Where(Function(x) x.ID = item1.BRAND_ID)
+                         From item2 In listBrand.Where(Function(x) x.ID = item1.BRAND_ID).DefaultIfEmpty()
                          Select New With
                          {
                             .Id = item1.ID,
@@ -115,6 +115,21 @@ Module Program
                               .Id = item1.ID,
                               .NameProduct = item1.NAME,
                               .NameBrand = item2.NAME
+                          }
+
+
+        ' kết hợp dữ liệu
+        ' cách 3
+        Dim dataSource3 = From item1 In listProduct
+                          Group Join item2 In listBrand On item2.ID Equals item1.BRAND_ID Into BrandGroup = Group
+                          From item2 In BrandGroup.DefaultIfEmpty()
+                          Where item1.ID >= 5
+                          Order By item1.ID Descending
+                          Select New With
+                          {
+                              .Id = item1.ID,
+                              .NameProduct = item1.NAME,
+                              .NameBrand = If(item2 IsNot Nothing, item2.NAME, String.Empty)
                           }
 
 
