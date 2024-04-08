@@ -1,4 +1,5 @@
 ﻿Imports System
+Imports System.Text.Json
 
 Module Program
     Sub Main(args As String())
@@ -133,8 +134,24 @@ Module Program
                           }
 
 
+
         ' sử dụng phương thức DistinctBy()
         Dim useDistinctBy = listProduct.DistinctBy(Function(x) x.BRAND_ID)
+
+
+
+        ' chuyển JSON sang đối tượng
+        Dim jsonString As String = "{""Id"": 1, ""Name"": ""John Smith""}"
+        Dim options As New JsonSerializerOptions()
+        Dim person As PersonDTO = JsonSerializer.Deserialize(Of PersonDTO)(jsonString, options)
+
+
+
+        ' chuyển đối tượng sang JSON
+        Dim options2 As New JsonSerializerOptions With {
+            .WriteIndented = True ' Tùy chọn này làm cho JSON được format dễ đọc
+        }
+        Dim jsonString2 As String = JsonSerializer.Serialize(person, options2)
     End Sub
 
 
