@@ -59,6 +59,13 @@ Module Program
         Console.WriteLine(person.Total(1, 2))
 
 
+        ' ngày hiện tại
+        Dim currentDate As DateTime = DateTime.Now
+
+        ' ngày cụ thể
+        Dim specificDate As DateTime = New DateTime(2023, 12, 31)
+
+
         ' sử dụng hàm tĩnh
         Console.WriteLine(MathUtils.Add(5, 3))
         Console.WriteLine(MathUtils.Subtract(5, 3))
